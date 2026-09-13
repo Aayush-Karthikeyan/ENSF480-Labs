@@ -9,6 +9,12 @@
 
 using namespace std;
 
+class Name{
+    string firstName;
+    string middleName;
+    string lastName;
+};
+
 // Class encapsulating calendar date representation
 class Date {
 private:
@@ -29,7 +35,7 @@ private:
 // Base class modeling shared human attributes
 class Person {
 private:
-    string name;
+    Name name;
     Address address;
 };
 
