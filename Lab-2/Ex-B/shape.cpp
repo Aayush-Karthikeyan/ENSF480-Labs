@@ -15,7 +15,7 @@ using namespace std;
 static char* copyString(const char* s){
 	if (s == nullptr) s = "";
 	char* p = new char[strlen(s) + 1];
-	stpcpy(p, s);
+	strcpy(p, s);
 	return p;
 }
 
