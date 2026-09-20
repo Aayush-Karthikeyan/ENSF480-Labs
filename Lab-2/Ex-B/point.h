@@ -29,6 +29,7 @@ public:
     void setY(int y);
     int getX() const;
     int getY() const;
+    int getId() const;
 
     static int counter();
 

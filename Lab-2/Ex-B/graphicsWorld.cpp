@@ -16,6 +16,7 @@ using namespace std;
 
 
 void GraphicsWorld::run(){
+    cout << "Lab 2 by Sarvesh Vettrivelan and Aayush Karthikeyan" << endl;
 #if 1// Change 0 to 1 to test Point
     Point m(6, 8);
     Point n(6,8);
@@ -24,7 +25,35 @@ void GraphicsWorld::run(){
     cout << "\nExpected second version of the distance function also print: 3";
     cout << "\nThe distance between m and n is again: "
     << Point::distance(m, n);
+    cout << "\nPoint IDs: " << m.getId() << ", " << n.getId() << endl;
+    cout << "Expected number of Points: 2\nNumber of Points: " << Point::counter() << endl;
+    {
+        Point p(m);
+        cout << "Copied Point ID: " << p.getId() << endl;
+        p = n;
+        p.setY(10);
+        cout << "Expected copied coordinates: 9, 10\nCoordinates: "
+             << p.getX() << ", " << p.getY() << endl;
+        cout << "Expected number of Points: 3\nNumber of Points: " << Point::counter() << endl;
+    }
+    cout << "Expected number of Points after destruction: 2\nNumber of Points: "
+         << Point::counter() << endl;
 #endif // end of block to test Point
+
+#if 1 // Change 0 to 1 to test Shape
+    {
+        cout << "\nTesting Functions in class Shape:" << endl;
+        Shape first(1, 2, "SHAPE FIRST");
+        Shape second(4, 6, "SHAPE SECOND");
+        cout << "Shape Name: " << first.getName() << endl;
+        first.getOrigin().display();
+        cout << "Expected static distance: 5\nStatic distance: "
+             << Shape::distance(first, second) << endl;
+        first.move(3, 4);
+        cout << "Expected origin after move: 4, 6" << endl;
+        first.display();
+    }
+#endif // end of block to test Shape
 
 #if 1// Change 0 to 1 to test Square
     cout << "\nTesting Functions in class Square:" <<endl;
@@ -76,9 +105,9 @@ void GraphicsWorld::run(){
     cout << "\nTesting array of pointers and polymorphism:" <<endl;
     Shape *sh[4];
     sh[0] = &s;
-    sh[1] = &rec1;
-    sh[2] = &rec3;
-    sh[3] = &b;
+    sh[1] = &b;
+    sh[2] = &rec1;
+    sh[3] = &rec3;
 
     sh[0]->display();
     sh[1]->display();

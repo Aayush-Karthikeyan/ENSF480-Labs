@@ -17,7 +17,7 @@ int Point::count = 0;
 int Point::nextId = 1001;
 
 
-Point::Point(int x, int y): ptX(x), ptY(y), id(nextId){
+Point::Point(int x, int y): ptX(x), ptY(y), id(nextId++){
 	count++;
 }
 
@@ -53,6 +53,10 @@ int Point::getY() const{
 	return ptY;
 }
 
+int Point::getId() const{
+    return id;
+}
+
 int Point::counter(){
 	return count;
 }
@@ -70,6 +74,10 @@ double Point::distance(const Point& otherpt) const{
 
 
 void Point::display() const{
+    ios::fmtflags oldFlags = cout.flags();
+    streamsize oldPrecision = cout.precision();
 	cout << "X-coordinate: " << fixed << setprecision(2) << ptX << endl;
     cout << "Y-coordinate: " << fixed << setprecision(2) << ptY << endl;
+    cout.flags(oldFlags);
+    cout.precision(oldPrecision);
 }
