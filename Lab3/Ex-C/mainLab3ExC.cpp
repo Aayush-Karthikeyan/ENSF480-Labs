@@ -147,9 +147,9 @@ void test_String()
     lt.insert(Pair<int, Mystring> (8001,b));
     lt.insert(Pair<int, Mystring> (8004,c));
  
-    //assert(lt.size() == 3);
-    //lt.remove(8004);
-    //assert(lt.size() == 2);
+    assert(lt.size() == 3);
+    lt.remove(8004);
+    assert(lt.size() == 2);
     cout << "\nPrinting table after inserting 3 new keys and  and 1 removal...\n";
     print(lt);
 
