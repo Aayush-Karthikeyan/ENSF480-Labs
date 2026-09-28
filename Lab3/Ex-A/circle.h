@@ -4,22 +4,26 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
 #ifndef CIRCLE_H
 #define CIRCLE_H
+
 #include "shape.h"
 
-class Circle : virtual public Shape {
+class Circle : virtual public Shape  {
 private:
-    double radius;
+    int radius;
+
 public:
-    Circle(double x, double y, double r, const char* name);
-    double get_radius() const;
-    virtual void set_radius(double r);
-    double area() const override;
-    double perimeter() const override;
-    void display() const override;
+    Circle(int x, int y, int r, const char*name);
+    void setRadius(int r);
+    int getRadius() const;
+
+    virtual int area() const;
+    virtual int perimeter() const;
+    virtual void display() const;
+    
 };
 #endif

@@ -4,11 +4,9 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
-// ENSF 480 - Lab 3, Ex C
-// M. Moussavi
 #ifndef CUSTOMER
 #define CUSTOMER
 #include <iostream>

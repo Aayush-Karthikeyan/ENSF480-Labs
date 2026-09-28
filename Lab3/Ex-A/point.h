@@ -4,7 +4,7 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
 #ifndef POINT_H
@@ -12,24 +12,28 @@
 
 class Point {
 private:
-    double ptX;
-    double ptY;
+    int ptX;
+    int ptY;
     int id;
-    static int count;
-    static int nextId;
+	static int count;
+	static int nextId; 
+	
 public:
-    Point(double x, double y);
-    Point(const Point& source);
+    Point(int x, int y);
+	Point(const Point& ptsrc);
     ~Point();
     Point& operator=(const Point& rhs);
+
     void display() const;
-    void setX(double x);
-    void setY(double y);
-    double getX() const;
-    double getY() const;
-    int getId() const;
+    void setX(int x);
+    void setY(int y);
+    int getX() const;
+    int getY() const;
+
     static int counter();
-    double distance(const Point& other) const;
-    static double distance(const Point& first, const Point& second);
+
+    double distance(const Point& otherpt) const;
+    static double distance(const Point& p1, const Point& p2);
 };
+
 #endif

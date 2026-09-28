@@ -4,77 +4,129 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
 #include "mystring2.h"
-#include <cassert>
-#include <cstring>
+#include <string.h>
+#include <iostream>
+using namespace std;
 
-Mystring::Mystring() : lengthM(0), charsM(new char[1]) {
-    charsM[0] = '\0';
+Mystring::Mystring()
+{ 
+  charsM = new char[1]; 
+  charsM[0] = '\0';
+  lengthM = 0;
 }
-Mystring::Mystring(int n) : lengthM(0), charsM(nullptr) {
-    assert(n > 0);
-    charsM = new char[n];
-    charsM[0] = '\0';
+
+Mystring::Mystring(const char *s)
+  : lengthM((int)strlen(s))
+{
+  charsM = new char[lengthM + 1];
+  strcpy(charsM, s);
 }
-Mystring::Mystring(const char* s) : lengthM(0), charsM(nullptr) {
-    assert(s != nullptr);
-    lengthM = static_cast<int>(std::strlen(s));
-    charsM = new char[lengthM + 1];
-    std::strcpy(charsM, s);
+
+Mystring::Mystring(int n)
+  : lengthM(0), charsM(new char[n])
+{
+  charsM[0] = '\0';
 }
-Mystring::Mystring(const Mystring& source)
-    : lengthM(source.lengthM), charsM(new char[source.lengthM + 1]) {
-    std::strcpy(charsM, source.charsM);
+
+Mystring::Mystring(const Mystring& source):
+  lengthM(source.lengthM), charsM(new char[source.lengthM+1])
+{
+  strcpy (charsM, source.charsM);
 }
-Mystring::~Mystring() { delete[] charsM; }
-Mystring& Mystring::operator=(const Mystring& rhs) {
-    if (this != &rhs)
-        set_str(rhs.charsM);
+
+Mystring::~Mystring()
+{
+  delete [] charsM;
+}
+
+int Mystring::length() const
+{
+  return lengthM;
+}
+
+char Mystring::get_char(int pos) const
+{
+  if(pos < 0 && pos >= length()){
+    cerr << "\nERROR: get_char: the position is out of boundary." ;
+  }
+
+  return charsM[pos];
+}
+
+const char * Mystring::c_str() const
+{
+  return charsM;
+}
+
+void Mystring::set_char(int pos, char c)
+{
+  if(pos < 0 && pos >= length()){
+    cerr << "\nset_char: the position is out of boundary."
+	 << " Nothing was changed.";
+    return;
+  } 
+
+  if (c != '\0'){
+    cerr << "\nset_char: char c is empty."
+	 << " Nothing was changed.";
+    return;
+  }
+
+  charsM[pos] = c;
+}
+
+Mystring& Mystring::operator =(const Mystring& S)
+{
+  if(this == &S)
     return *this;
+  delete [] charsM;
+  lengthM = (int) strlen(S.charsM);
+  charsM = new char [lengthM+1];
+  strcpy(charsM,S.charsM);
+  return *this;
 }
-int Mystring::length() const { return lengthM; }
-char Mystring::get_char(int pos) const {
-    assert(pos >= 0 && pos < lengthM);
-    return charsM[pos];
+
+Mystring& Mystring::append(const Mystring& other)
+{
+  char *tmp = new char [lengthM + other.lengthM + 1];
+  lengthM+=other.lengthM;
+  strcpy(tmp, charsM);
+  strcat(tmp, other.charsM);
+  delete []charsM;
+  charsM = tmp;
+
+  return *this;
 }
-const char* Mystring::c_str() const { return charsM; }
-void Mystring::set_char(int pos, char c) {
-    assert(pos >= 0 && pos < lengthM && c != '\0');
-    charsM[pos] = c;
+
+ void Mystring::set_str(char* s)
+{
+    delete []charsM;
+    lengthM = (int) strlen(s);
+    charsM=new char[lengthM+1];
+
+    strcpy(charsM, s);
 }
-Mystring& Mystring::append(const Mystring& other) {
-    int newLength = lengthM + other.lengthM;
-    char* tmp = new char[newLength + 1];
-    std::strcpy(tmp, charsM);
-    std::strcat(tmp, other.charsM);
-    delete[] charsM;
-    charsM = tmp;
-    lengthM = newLength;
-    return *this;
-}
-void Mystring::set_str(const char* s) {
-    assert(s != nullptr);
-    int newLength = static_cast<int>(std::strlen(s));
-    // Copy before deleting so s may refer to part of this string.
-    char* tmp = new char[newLength + 1];
-    std::strcpy(tmp, s);
-    delete[] charsM;
-    charsM = tmp;
-    lengthM = newLength;
-}
-bool Mystring::operator<(const Mystring& rhs) const {
-    return std::strcmp(charsM, rhs.charsM) < 0;
-}
-bool Mystring::operator>(const Mystring& rhs) const { return rhs < *this; }
-bool Mystring::operator==(const Mystring& rhs) const {
-    return std::strcmp(charsM, rhs.charsM) == 0;
-}
-bool Mystring::operator!=(const Mystring& rhs) const { return !(*this == rhs); }
-bool Mystring::operator<=(const Mystring& rhs) const { return !(rhs < *this); }
-bool Mystring::operator>=(const Mystring& rhs) const { return !(*this < rhs); }
-std::ostream& operator<<(std::ostream& os, const Mystring& s) {
+
+std::ostream& operator <<(std::ostream& os, const Mystring& s)
+{
     return os << s.charsM;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

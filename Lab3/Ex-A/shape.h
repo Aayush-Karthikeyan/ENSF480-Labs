@@ -4,29 +4,36 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
 #ifndef SHAPE_H
 #define SHAPE_H
+
 #include "point.h"
 
-class Shape {
+class Shape{
 private:
-    Point origin;
-    char* shapeName;
+	Point origin;
+	char* shapeName;
+
 public:
-    Shape(double x, double y, const char* name);
-    Shape(const Shape& source);
-    virtual ~Shape();
-    Shape& operator=(const Shape& rhs);
-    virtual double area() const = 0;
-    virtual double perimeter() const = 0;
-    virtual void display() const;
-    const Point& getOrigin() const;
-    const char* getName() const;
-    double distance(const Shape& other) const;
-    static double distance(const Shape& first, const Shape& second);
-    void move(double dx, double dy);
+	Shape(int x, int y, const char* name);
+	Shape(const Shape& src);
+	virtual ~Shape();
+	Shape& operator=(const Shape& rhs);
+	virtual void display() const;
+	
+	const Point& getOrigin() const;
+	const char* getName() const;
+	
+	virtual int area() const = 0;
+    virtual int perimeter() const = 0;
+
+	double distance(Shape& other);
+	static double distance(Shape& the_shape, Shape& other); 
+	void move(double dx, double dy);
+	
+	
 };
 #endif

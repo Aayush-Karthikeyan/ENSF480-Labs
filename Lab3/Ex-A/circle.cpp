@@ -4,33 +4,29 @@
  * Completed By:
  *   - Sarvesh Vettrivelan
  *   - Aayush Karthikeyan
- * Submission Date: Sept. 25, 2026
+ * Submission Date: Sept. 28, 2026
  */
 
 #include "circle.h"
-#include <cmath>
-#include <cstdlib>
 #include <iostream>
+#define PI 3.14
 using namespace std;
 
-Circle::Circle(double x, double y, double r, const char* name)
-    : Shape(x, y, name), radius(r) {
-    set_radius(r);
-}
-double Circle::get_radius() const { return radius; }
-void Circle::set_radius(double r) {
-    if (!isfinite(r) || r < 0) {
-        cerr << "Error: radius must be a finite, non-negative value.\n";
-        exit(EXIT_FAILURE);
-    }
-    radius = r;
-}
-double Circle::area() const { return acos(-1.0) * radius * radius; }
-double Circle::perimeter() const { return 2 * acos(-1.0) * radius; }
+Circle::Circle(int x, int y, int r, const char*name) 
+            : Shape(x, y, name), radius(r){}
+
+void Circle::setRadius(int r) {radius = r;}
+
+int Circle::getRadius() const {return radius;}
+
+int Circle::area() const {return (int)(PI * radius * radius);}
+
+int Circle::perimeter() const {return (int)(2 * PI * radius);}
+
 void Circle::display() const {
-    cout << "Circle Name: " << getName() << '\n';
+    cout<<"Circle Name: "<<getName()<<endl;
     getOrigin().display();
-    cout << "Radius: " << radius << '\n';
-    cout << "Area: " << area() << '\n';
-    cout << "Perimeter: " << perimeter() << '\n';
+    cout<<"Radius: "<<getRadius()<<"\n";
+    cout<<"Area: "<< area()<<"\n";
+    cout<<"Perimeter: "<< perimeter()<<"\n";
 }
