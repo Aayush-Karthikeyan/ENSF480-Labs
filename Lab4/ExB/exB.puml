@@ -1,0 +1,36 @@
+@startuml exB
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 70
+hide empty members
+hide circle
+set separator none
+
+package "Statement 1: Department uses Vector" {
+  class "Department" as D1
+  class Vector
+  D1 "1" -- "1..*" Vector : uses >
+}
+
+package "Statement 2: Department has Professors + head" {
+  class "Department" as D2
+  class "Professor" as P2
+  D2 "1" -- "1..*" P2 : has >
+  D2 "0..1" -- "1" P2 : head <
+}
+
+package "Statement 3: Course, Section, Student" {
+  class Course
+  class "Section" as S3
+  class Student
+  Course "1" -- "1..*" S3 : has >
+  Course "0..*" -- "0..*" Course : prerequisite
+  S3 "*" -- "1..*" Student : has >
+}
+
+package "Statement 4: Professor teaches Section" {
+  class "Professor" as P4
+  class "Section" as S4
+  P4 "1" -- "1..*" S4 : teaches >
+}
+@enduml

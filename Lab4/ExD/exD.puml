@@ -1,0 +1,151 @@
+@startuml exD
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam nodesep 60
+skinparam ranksep 60
+hide empty members
+set separator none
+
+' ===================== shapes package =====================
+package shapes {
+  class Point {
+    - x_coordinate : double
+    - y_coordinate : double
+    ~ {static} counter : int
+    ~ id : String
+    + toString() : String
+    + distance(other : Point) : double
+    ~ {static} distance(that : Point, other : Point) : double
+    + {static} count() : int
+  }
+
+  abstract class Shape {
+    # name : String
+    # id : String
+    ~ {static} counter : int
+    + {abstract} area() : double
+    + {abstract} perimeter() : double
+    + {abstract} volume() : double
+    ~ distance(other : Shape) : double
+    ~ distance(the_shape : Shape, other : Shape) : double
+    ~ move(dx : double, dy : double) : void
+    + toString() : String
+    + {static} count() : int
+  }
+
+  class Circle {
+    - radius : double
+    ~ {static} id_counter : int
+    + area() : double
+    + perimeter() : double
+    + volume() : double
+    + toString() : String
+  }
+
+  Shape *--> "1" Point : origin
+  Circle --|> Shape
+}
+
+' ===================== interfaces package =====================
+package interfaces {
+  interface Accessible <<interface>> {
+    + {abstract} getName() : String
+    + {abstract} setName(name : String) : void
+    + {abstract} getOid() : String
+  }
+  interface Calculable <<interface>> {
+    + {abstract} area() : double
+    + {abstract} perimeter() : double
+  }
+  interface Lab0implementable <<interface>> {
+    + {static} CELESTIAL : int = 100 {readOnly}
+    + {static} SHAPE : int = 200 {readOnly}
+    + {static} CIRCLE : int = 2000 {readOnly}
+    + {static} PLANET : int = 10000 {readOnly}
+    + {static} SUN : int = 1000 {readOnly}
+    + {static} MOON : int = 100000 {readOnly}
+    + {abstract} getRadius() : double
+    + {abstract} setRadius(value : double) : void
+  }
+  Lab0implementable --|> Calculable
+  Lab0implementable --|> Accessible
+}
+
+' ===================== exceptions package =====================
+package exceptions {
+  class RadiusException
+  class MoonRadiusException
+  class MoreThanLimitException
+  MoonRadiusException --|> RadiusException
+}
+
+package java.lang {
+  class Exception
+  interface Cloneable <<interface>>
+}
+RadiusException --|> Exception
+MoreThanLimitException --|> Exception
+RadiusException ..> Accessible : <<use>>
+MoonRadiusException ..> Accessible : <<use>>
+
+' ===================== celestialBody package =====================
+package celestialBody {
+  abstract class CelestialBody {
+    # radius : double
+    # name : String
+    - {static} counter : int
+    # Oid : String
+    + toString() : String
+  }
+  class Moon {
+    - {static} counter : int
+    - distance_from_planet : double
+    + area() : double
+    + perimeter() : double
+    + toString() : String
+  }
+  class Planet {
+    - {static} counter : int
+    - num_moons : int
+    - orbital_distance : double
+    + area() : double
+    + perimeter() : double
+    + toString() : String
+  }
+  class Sun {
+    - min_distance : double
+    ~ num_planets : int
+    - {static} counter : int
+    + area() : double
+    + perimeter() : double
+    + toString() : String
+  }
+  Moon --|> CelestialBody
+  Planet --|> CelestialBody
+  Sun --|> CelestialBody
+  Planet "1" o--> "0..5" Moon : moons
+  Sun "1" o--> "0..5" Planet : planets
+}
+
+' ===================== cross-package relationships =====================
+CelestialBody o--> "1" Point : center
+CelestialBody ..|> Cloneable
+CelestialBody ..|> Lab0implementable
+Circle ..|> Lab0implementable
+Planet ..|> Accessible
+Planet ..|> Calculable
+
+Circle ..> RadiusException : <<throws>>
+CelestialBody ..> RadiusException : <<throws>>
+Moon ..> MoonRadiusException : <<throws>>
+Planet ..> MoreThanLimitException : <<throws>>
+Sun ..> MoreThanLimitException : <<throws>>
+Lab0implementable ..> RadiusException : <<throws>>
+
+' ===================== Test (default package) =====================
+class Test {
+  + {static} main(args : String[]) : void
+  + {static} access(ac : Lab0implementable) : void
+}
+Test ..> Lab0implementable : <<use>>
+@enduml

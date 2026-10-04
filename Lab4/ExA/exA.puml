@@ -1,0 +1,25 @@
+@startuml exA
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Point {
+  - x : double
+  - y : double
+}
+
+interface Cloneable <<interface>>
+
+class "Node" as Node<D> {
+  ~ keyM : Integer
+  ~ itemM : D
+  ~ nextM : Node<D>
+}
+Node ..|> Cloneable
+
+abstract class Shape {
+  # origin : Point
+  # shapeName : string
+  + {static} distance(the_shape : Shape&, other : Shape&) : double
+  + {abstract} area() : double
+}
+@enduml
