@@ -1,0 +1,93 @@
+@startuml exE
+skinparam classAttributeIconSize 0
+skinparam nodesep 60
+skinparam ranksep 60
+skinparam dpi 150
+hide empty members
+set separator none
+
+' ========== constants (xo_constants.h) shown as an interface ==========
+interface xo_constants <<interface>> {
+  + {static} BOARD_SIZE : int = 3 {readOnly}
+  + {static} SPACE_CHAR : char = ' ' {readOnly}
+  + {static} LETTER_O : char = 'O' {readOnly}
+  + {static} LETTER_X : char = 'X' {readOnly}
+}
+
+' ========== Mystring ==========
+class Mystring {
+  - lengthM : int
+  - charsM : char*
+  + operator>(s : const Mystring&) : bool {query}
+  + operator<(s : const Mystring&) : bool {query}
+  + operator==(s : const Mystring&) : bool {query}
+  + operator!=(s : const Mystring&) : bool {query}
+  + append(s : const Mystring&) : void
+  + append(c : char) : void
+  + truncate(new_length : int) : void
+  + <<friend>> operator<<(os : ostream&, rhs : const Mystring&) : ostream&
+}
+
+' ========== Board ==========
+class Board {
+  - squareM : char[BOARD_SIZE][BOARD_SIZE]
+  - mark_countM : int
+  + get_mark(row : int, col : int) : char {query}
+  + is_full() : int {query}
+  + x_wins() : int {query}
+  + o_wins() : int {query}
+  + display() : void {query}
+  + put_mark(row : int, col : int, mark : char) : void
+  + clear() : void
+  - check_winner(mark : char) : int {query}
+  - write_column_headers() : void {query}
+  - write_mostly_hyphens() : void {query}
+  - write_mostly_spaces() : void {query}
+}
+
+' ========== Player hierarchy ==========
+abstract class Player {
+  # its_markM : char
+  # opponent_markM : char
+  + {abstract} make_move(row : int&, col : int&) : void
+}
+
+class HumanPlayer {
+  + make_move(row : int&, col : int&) : void
+}
+class RandomPlayer {
+  + make_move(row : int&, col : int&) : void
+}
+class BlockingPlayer {
+  + make_move(row : int&, col : int&) : void
+  - test_for_block(row : int, col : int) : int
+  - random_move(row : int&, col : int&) : void
+}
+
+HumanPlayer --|> Player
+RandomPlayer --|> Player
+BlockingPlayer --|> Player
+
+Player *--> "1" Mystring : nameM
+Player "0..*" --> "1" Board : boardM
+
+' ========== Referee ==========
+class Referee {
+  + run_a_game() : void
+  - get_a_move(the_player : Player*) : void
+}
+Referee "0..1" --> "1" Board : boardM
+Referee "0..1" --> "1" Player : x_playerM
+Referee "0..1" --> "1" Player : o_playerM
+
+' ========== Game ==========
+class Game {
+  + create_player(mark : char, board : Board*) : Player*
+}
+Game ..> Player : <<create>>
+Game ..> Board : <<use>>
+
+' ========== use of constants ==========
+Board ..> xo_constants : <<use>>
+Player ..> xo_constants : <<use>>
+@enduml
